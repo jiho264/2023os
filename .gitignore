@@ -1,0 +1,21 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+a.out
+**/.svn
+**/.hg
+**/CVS
+**/.DS_Store
+**/Thumbs.db
+**/**.dSYM
+**/tempCodeRunnerFile.*
+**/**.o
+*.dat
+**/**.docx
+**/**.pdf
+**/Document
