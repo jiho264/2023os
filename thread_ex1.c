@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <pthread.h>
 int thread_args[3] = {0, 1, 2};
-void *Thread(void *arg)
+void *dja(void *arg)
 {
     for (int i = 0; i < 5; i++)
         printf("thread %d: %dth iteration\n", *(int *)arg, i);
@@ -16,7 +16,7 @@ int main()
         printf("Thread Num %d Create!!\n", i);
         // void * .. i don't now that. but, it is POINTER
         // pthread_create(&threads[i], NULL, (void *(*)(void *))Thread, &thread_args[i]);
-        pthread_create(&threads[i], NULL, Thread, &thread_args[i]);
+        pthread_create(&threads[i], NULL, dja, &thread_args[i]);
     }
     pthread_exit(0);
     printf("hello world");
