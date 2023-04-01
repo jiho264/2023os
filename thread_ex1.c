@@ -15,7 +15,8 @@ int main()
     {
         printf("Thread Num %d Create!!\n", i);
         // void * .. i don't now that. but, it is POINTER
-        pthread_create(&threads[i], NULL, (void *(*)(void *))Thread, &thread_args[i]);
+        // pthread_create(&threads[i], NULL, (void *(*)(void *))Thread, &thread_args[i]);
+        pthread_create(&threads[i], NULL, Thread, &thread_args[i]);
     }
     pthread_exit(0);
     printf("hello world");
