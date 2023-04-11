@@ -9,20 +9,20 @@
         {
             "Num": 2,
             "Burst_time": 14,
-            "Priority": 5,
-            "Arrival_time": 1
+            "Priority": 4,
+            "Arrival_time": 0
         },
         {
             "Num": 3,
             "Burst_time": 102,
-            "Priority": 3,
-            "Arrival_time": 2
+            "Priority": 2,
+            "Arrival_time": 0
         },
         {
             "Num": 4,
             "Burst_time": 12,
-            "Priority": 3,
-            "Arrival_time": 3
+            "Priority": 1,
+            "Arrival_time": 0
         }
     ]
 }
