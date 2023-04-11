@@ -14,7 +14,7 @@
         },
         {
             "Num": 3,
-            "Burst_time": 33,
+            "Burst_time": 2,
             "Priority": 3,
             "Arrival_time": 2
         }
