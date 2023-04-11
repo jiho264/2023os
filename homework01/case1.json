@@ -2,8 +2,8 @@
     "list": [
         {
             "Num": 1,
-            "Priority": 5,
             "Burst_time": 10,
+            "Priority": 5,
             "Arrival_time": 0
         },
         {
@@ -19,16 +19,10 @@
             "Arrival_time": 2
         },
         {
-            "Num": 999,
-            "Burst_time": 10,
-            "Priority": 3,
-            "Arrival_time": 2
-        },
-        {
             "Num": 4,
             "Burst_time": 12,
             "Priority": 3,
-            "Arrival_time": 2
+            "Arrival_time": 3
         }
     ]
 }
