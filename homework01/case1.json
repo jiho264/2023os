@@ -1,0 +1,22 @@
+{
+    "list": [
+        {
+            "Num": 1,
+            "Burst_time": 24,
+            "Priority": 1,
+            "Arrival_time": 0
+        },
+        {
+            "Num": 2,
+            "Burst_time": 3,
+            "Priority": 5,
+            "Arrival_time": 8
+        },
+        {
+            "Num": 3,
+            "Burst_time": 3,
+            "Priority": 3,
+            "Arrival_time": 2
+        }
+    ]
+}
