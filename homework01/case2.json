@@ -2,27 +2,27 @@
     "list": [
         {
             "Num": 1,
-            "Burst_time": 6,
+            "Burst_time": 8,
             "Priority": 5,
             "Arrival_time": 0
         },
         {
             "Num": 2,
-            "Burst_time": 8,
+            "Burst_time": 4,
             "Priority": 3,
-            "Arrival_time": 0
+            "Arrival_time": 1
         },
         {
             "Num": 3,
-            "Burst_time": 7,
-            "Priority": 0,
-            "Arrival_time": 0
+            "Burst_time": 9,
+            "Priority": 1,
+            "Arrival_time": 2
         },
         {
             "Num": 4,
-            "Burst_time": 3,
+            "Burst_time": 5,
             "Priority": 1,
-            "Arrival_time": 0
+            "Arrival_time": 3
         }
     ]
 }

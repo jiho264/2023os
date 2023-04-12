@@ -3,26 +3,32 @@
         {
             "Num": 1,
             "Burst_time": 30,
-            "Priority": 5,
-            "Arrival_time": 0
+            "Priority": 1,
+            "Arrival_time": 10
         },
         {
             "Num": 2,
             "Burst_time": 25,
             "Priority": 3,
-            "Arrival_time": 0
+            "Arrival_time": 10
         },
         {
             "Num": 3,
             "Burst_time": 25,
-            "Priority": 1,
+            "Priority": 5,
             "Arrival_time": 100
         },
         {
             "Num": 4,
-            "Burst_time": 10,
+            "Burst_time": 50,
             "Priority": 2,
             "Arrival_time": 100
+        },
+        {
+            "Num": 5,
+            "Burst_time": 30,
+            "Priority": 2,
+            "Arrival_time": 0
         }
     ]
 }
