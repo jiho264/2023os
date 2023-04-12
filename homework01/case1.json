@@ -14,15 +14,15 @@
         },
         {
             "Num": 3,
-            "Burst_time": 102,
+            "Burst_time": 25,
             "Priority": 1,
-            "Arrival_time": 0
+            "Arrival_time": 100
         },
         {
             "Num": 4,
-            "Burst_time": 12,
+            "Burst_time": 10,
             "Priority": 2,
-            "Arrival_time": 0
+            "Arrival_time": 100
         }
     ]
 }
