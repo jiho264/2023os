@@ -2,7 +2,7 @@
     "list": [
         {
             "Num": 1,
-            "Burst_time": 10,
+            "Burst_time": 30,
             "Priority": 5,
             "Arrival_time": 0
         },
