@@ -27,7 +27,7 @@
         {
             "Num": 5,
             "Burst_time": 30,
-            "Priority": 2,
+            "Priority": 8,
             "Arrival_time": 0
         }
     ]
