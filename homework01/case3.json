@@ -1,0 +1,10 @@
+{
+    "list": [
+        {
+            "Num": 1,
+            "Burst_time": 50,
+            "Priority": 1,
+            "Arrival_time": 100
+        }
+    ]
+}
