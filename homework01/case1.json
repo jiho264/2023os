@@ -3,32 +3,32 @@
         {
             "Num": 1,
             "Burst_time": 30,
-            "Priority": 5,
-            "Arrival_time": 10
+            "Priority": 4,
+            "Arrival_time": 0
         },
         {
             "Num": 2,
-            "Burst_time": 10,
+            "Burst_time": 15,
             "Priority": 3,
-            "Arrival_time": 15
+            "Arrival_time": 10
         },
         {
             "Num": 3,
             "Burst_time": 25,
             "Priority": 5,
-            "Arrival_time": 110
+            "Arrival_time": 90
         },
         {
             "Num": 4,
             "Burst_time": 50,
             "Priority": 2,
-            "Arrival_time": 100
+            "Arrival_time": 85
         },
         {
             "Num": 5,
-            "Burst_time": 30,
+            "Burst_time": 5,
             "Priority": 8,
-            "Arrival_time": 0
+            "Arrival_time": 25
         }
     ]
 }
