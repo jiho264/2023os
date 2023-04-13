@@ -8,15 +8,15 @@
         },
         {
             "Num": 2,
-            "Burst_time": 25,
+            "Burst_time": 10,
             "Priority": 3,
-            "Arrival_time": 10
+            "Arrival_time": 15
         },
         {
             "Num": 3,
             "Burst_time": 25,
             "Priority": 5,
-            "Arrival_time": 100
+            "Arrival_time": 110
         },
         {
             "Num": 4,
