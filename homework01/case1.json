@@ -8,27 +8,27 @@
         },
         {
             "Num": 2,
-            "Burst_time": 15,
+            "Burst_time": 5,
             "Priority": 3,
             "Arrival_time": 10
         },
         {
             "Num": 3,
             "Burst_time": 25,
-            "Priority": 5,
-            "Arrival_time": 90
+            "Priority": 2,
+            "Arrival_time": 70
         },
         {
             "Num": 4,
             "Burst_time": 50,
             "Priority": 2,
-            "Arrival_time": 85
+            "Arrival_time": 55
         },
         {
             "Num": 5,
-            "Burst_time": 5,
+            "Burst_time": 2,
             "Priority": 8,
-            "Arrival_time": 25
+            "Arrival_time": 15
         }
     ]
 }
