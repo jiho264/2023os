@@ -14,19 +14,19 @@
         },
         {
             "Num": 3,
-            "Burst_time": 25,
+            "Burst_time": 500,
             "Priority": 2,
             "Arrival_time": 55
         },
         {
             "Num": 4,
-            "Burst_time": 50,
+            "Burst_time": 500,
             "Priority": 2,
             "Arrival_time": 55
         },
         {
             "Num": 5,
-            "Burst_time": 20,
+            "Burst_time": 200,
             "Priority": 9,
             "Arrival_time": 15
         }
