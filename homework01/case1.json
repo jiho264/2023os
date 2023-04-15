@@ -8,7 +8,7 @@
         },
         {
             "Num": 2,
-            "Burst_time": 5,
+            "Burst_time": 500,
             "Priority": 3,
             "Arrival_time": 11
         },
@@ -26,7 +26,7 @@
         },
         {
             "Num": 5,
-            "Burst_time": 200,
+            "Burst_time": 500,
             "Priority": 9,
             "Arrival_time": 15
         }
