@@ -3,14 +3,14 @@
         {
             "Num": 1,
             "Burst_time": 30,
-            "Priority": 4,
+            "Priority": 2,
             "Arrival_time": 50
         },
         {
             "Num": 2,
             "Burst_time": 5,
-            "Priority": 3,
-            "Arrival_time": 11
+            "Priority": 2,
+            "Arrival_time": 20
         },
         {
             "Num": 3,
@@ -27,8 +27,14 @@
         {
             "Num": 5,
             "Burst_time": 20,
-            "Priority": 8,
+            "Priority": 4,
             "Arrival_time": 15
+        },
+        {
+            "Num": 6,
+            "Burst_time": 20,
+            "Priority": 8,
+            "Arrival_time": 190
         }
     ]
 }
