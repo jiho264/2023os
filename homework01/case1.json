@@ -10,7 +10,7 @@
             "Num": 2,
             "Burst_time": 500,
             "Priority": 3,
-            "Arrival_time": 11
+            "Arrival_time": 0
         },
         {
             "Num": 3,
@@ -26,7 +26,7 @@
         },
         {
             "Num": 5,
-            "Burst_time": 500,
+            "Burst_time": 200,
             "Priority": 9,
             "Arrival_time": 15
         }
