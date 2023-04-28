@@ -2,38 +2,38 @@
     "list": [
         {
             "Num": 1,
-            "Burst_time": 20,
-            "Priority": 2,
-            "Arrival_time": 50,
+            "Burst_time": 12,
+            "Priority": 3,
+            "Arrival_time": 0,
             "Period": 50
         },
         {
             "Num": 2,
-            "Burst_time": 35,
+            "Burst_time": 19,
             "Priority": 3,
-            "Arrival_time": 0,
+            "Arrival_time": 5,
             "Period": 100
         },
         {
             "Num": 3,
-            "Burst_time": 50,
-            "Priority": 2,
-            "Arrival_time": 55,
-            "Period": 150
+            "Burst_time": 21,
+            "Priority": 5,
+            "Arrival_time": 8,
+            "Period": 70
         },
         {
             "Num": 4,
-            "Burst_time": 500,
+            "Burst_time": 13,
             "Priority": 2,
-            "Arrival_time": 55,
-            "Period": 1000
+            "Arrival_time": 11,
+            "Period": 70
         },
         {
             "Num": 5,
-            "Burst_time": 200,
-            "Priority": 9,
+            "Burst_time": 15,
+            "Priority": 3,
             "Arrival_time": 15,
-            "Period": 400
+            "Period": 80
         }
     ]
 }
