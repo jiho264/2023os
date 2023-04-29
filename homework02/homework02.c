@@ -14,8 +14,8 @@ typedef struct OBJECT
     int dx, dy;
 } OBJECT;
 
-OBJECT user = {20, 100, BOX_AZ, BOX_EL, 10, 10};
-OBJECT comp = {XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 10, 10};
+OBJECT user = {20, 100, BOX_AZ, BOX_EL, 0, 15};
+OBJECT comp = {XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 0, -1};
 OBJECT ball = {XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1};
 
 // 도형 그리기
@@ -26,9 +26,9 @@ void Draw_Object(HWND hWnd, HDC hdc, HBRUSH hBrush, OBJECT prt, BOOL _is_rect)
     oBrush = (HBRUSH)SelectObject(hdc, hBrush); // 입력 인자로 전달받은 브러쉬를 DC에 선택
 
     if (_is_rect == 1)
-        Rectangle(hdc, prt.x, prt.y, prt.x + prt.az, prt.y + prt.el); // 사각형 그리기
+        Rectangle(hdc, prt.x, prt.y, prt.x + BOX_AZ, prt.y + BOX_EL); // 사각형 그리기
     else
-        Ellipse(hdc, prt.x, prt.y, prt.x + prt.az, prt.y + prt.el); // 타원 그리기
+        Ellipse(hdc, prt.x, prt.y, prt.x + BALL_2R, prt.y + BALL_2R); // 타원 그리기
 
     RECT _tmp = {prt.x, prt.y, prt.x + prt.az, prt.y + prt.el};
     InvalidateRect(hWnd, &_tmp, TRUE);
@@ -38,12 +38,8 @@ void Draw_Object(HWND hWnd, HDC hdc, HBRUSH hBrush, OBJECT prt, BOOL _is_rect)
 // 그리기 작업
 void Draw_ALL(HWND hWnd)
 {
-    // 펜과 브러쉬 스타일 문자열 조합
-    // wsprintf(buf, TEXT("%s, %s"), pstrs[pi], bstrs[bi]);
     // 츨력할 좌표 설정
-    // 펜과 브러쉬 스타일 문자열 출력
     // TextOut(hdc, 100, 100, "x", 1);
-    // 특정 펜과 브러쉬로 도형 출력
 
     PAINTSTRUCT ps;
     BeginPaint(hWnd, &ps);
@@ -78,7 +74,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
         case VK_DOWN:
         {
             // bar가 경계 닿는 순간
-            if (user.y + 1.4 * user.el >= YLIM)
+            if (user.y + 1.4 * BOX_EL >= YLIM)
             {
             }
             else
@@ -91,26 +87,47 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
     }
     case WM_PAINT:
     {
+        // comp의 기본 움직임
+        // bar가 경계 닿는 순간
+        if (comp.y <= 0 || comp.y + 1.4 * BOX_EL >= YLIM)
+        {
+            comp.dy = -comp.dy;
+        }
+        comp.y += comp.dy;
 
+        // 만약 공이 user에 닿음
+        if (ball.x <= user.x + BOX_AZ)
+        {
+            if (user.y < ball.y && ball.y + BALL_2R < user.y + BOX_EL)
+            {
+                ball.dx = -ball.dx;
+            }
+        }
+        // 만약 공이 comp에 닿음
+        if (comp.x <= ball.x + BALL_2R)
+        {
+            if (comp.y < ball.y && ball.y + BALL_2R < comp.y + BOX_EL)
+            {
+                ball.dx = -ball.dx;
+            }
+        }
         // ball이 위나 아래에 부딪히면 반대로
-        if (ball.y == 0 || ball.y + 3.5 * ball.el >= YLIM)
+        if (ball.y == 0 || ball.y + 3.5 * BALL_2R >= YLIM)
         {
             ball.dy = -ball.dy;
         }
-
-        // 만약 공이 유저쪽에 도착
-
-        if (ball.x < user.x + user.az)
+        // 만약 comp가 ball을 놓쳐서 오른쪽 바깥으로 나감
+        if (XLIM <= ball.x + BALL_2R)
         {
-            if (ball.y > user.y)
-            {
-                ball.dx = -ball.dx;
-            }
-            else if (ball.y + ball.el < user.y + user.el)
-            {
-                ball.dx = -ball.dx;
-            }
+            // level up!
+            comp.dy *= 2;
+            // iniy ball
+            ball.x = 500;
+            ball.y = 250;
+            ball.dx *= -ball.dx;
+            ball.dy *= -ball.dy;
         }
+
         ball.x += ball.dx;
         ball.y += ball.dy;
 
