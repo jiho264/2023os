@@ -16,7 +16,7 @@ typedef struct OBJECT
 
 OBJECT user = {20, 100, BOX_AZ, BOX_EL, 10, 10};
 OBJECT comp = {XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 10, 10};
-OBJECT ball = {XLIM / 2, YLIM / 2, BALL_2R, BALL_2R, 5, 5};
+OBJECT ball = {XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1};
 
 // 도형 그리기
 void Draw_Object(HWND hWnd, HDC hdc, HBRUSH hBrush, OBJECT prt, BOOL _is_rect)
@@ -29,6 +29,9 @@ void Draw_Object(HWND hWnd, HDC hdc, HBRUSH hBrush, OBJECT prt, BOOL _is_rect)
         Rectangle(hdc, prt.x, prt.y, prt.x + prt.az, prt.y + prt.el); // 사각형 그리기
     else
         Ellipse(hdc, prt.x, prt.y, prt.x + prt.az, prt.y + prt.el); // 타원 그리기
+
+    RECT _tmp = {prt.x, prt.y, prt.x + prt.az, prt.y + prt.el};
+    InvalidateRect(hWnd, &_tmp, TRUE);
 
     SelectObject(hdc, oBrush); // 기존 선택 브러쉬를 DC에 선택
 }
@@ -47,8 +50,8 @@ void Draw_ALL(HWND hWnd)
 
     Draw_Object(hWnd, ps.hdc, CreateSolidBrush(RGB(255, 0, 0)), user, 1);
     Draw_Object(hWnd, ps.hdc, CreateSolidBrush(RGB(0, 255, 0)), comp, 1);
+    // 공 날라갈 때 조금 덜 그려짐
     Draw_Object(hWnd, ps.hdc, CreateSolidBrush(RGB(0, 0, 0)), ball, 0);
-    InvalidateRect(hWnd, 0, TRUE);
     EndPaint(hWnd, &ps);
 }
 
@@ -64,20 +67,53 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
         {
         case VK_UP:
         {
-            user.y -= 10;
+            // bar가 경계 닿는 순간
+            if (user.y <= 0)
+            {
+            }
+            else
+                user.y -= user.dy;
             break;
         }
         case VK_DOWN:
         {
-            user.y += 10;
+            // bar가 경계 닿는 순간
+            if (user.y + 1.4 * user.el >= YLIM)
+            {
+            }
+            else
+                user.y += user.dy;
             break;
         }
         default:
-            return;
+            return 0;
         }
     }
     case WM_PAINT:
     {
+
+        // ball이 위나 아래에 부딪히면 반대로
+        if (ball.y == 0 || ball.y + 3.5 * ball.el >= YLIM)
+        {
+            ball.dy = -ball.dy;
+        }
+
+        // 만약 공이 유저쪽에 도착
+
+        if (ball.x < user.x + user.az)
+        {
+            if (ball.y > user.y)
+            {
+                ball.dx = -ball.dx;
+            }
+            else if (ball.y + ball.el < user.y + user.el)
+            {
+                ball.dx = -ball.dx;
+            }
+        }
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
         Draw_ALL(hWnd);
         return 0;
     }
@@ -103,7 +139,7 @@ INT APIENTRY WinMain(HINSTANCE hIns, HINSTANCE hPrev, LPSTR cmd, INT nShow)
 
     // 윈도우 인스턴스 생성
     HWND hWnd = CreateWindow(MY_DRAW_WND,         // 클래스 이름
-                             TEXT("그리기 예제"), // 캡션 명
+                             TEXT("homework02"),  // 캡션 명
                              WS_OVERLAPPEDWINDOW, // 윈도우 스타일
                              10, 10, XLIM, YLIM,  // 좌,상,폭,높이
                              0,                   // 부모 윈도우 핸들
@@ -117,6 +153,7 @@ INT APIENTRY WinMain(HINSTANCE hIns, HINSTANCE hPrev, LPSTR cmd, INT nShow)
     {
         TranslateMessage(&Message); // WM_KEYDOWN이고 키가 문자 키일 때 WM_CHAR 발생
         DispatchMessage(&Message);  // 콜백 프로시저가 수행할 수 있게 디스패치 시킴
+        Sleep(1);
     }
     return 0;
 }
