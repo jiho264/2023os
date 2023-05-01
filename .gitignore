@@ -20,4 +20,4 @@ a.out
 **/**.pdf
 **/Document
 **/.vscode
-**/**.exe
+# **/**.exe
