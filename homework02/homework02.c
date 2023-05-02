@@ -2,9 +2,9 @@
 #define MY_DRAW_WND (TEXT("ex_drawing"))
 #define XLIM 640
 #define YLIM 480
-#define BAR_AZ 20
+#define BAR_AZ 10
 #define BAR_EL 100
-#define BALL_2R 15
+#define BALL_2R 10
 typedef struct OBJECT
 {
     int x, y;
@@ -12,8 +12,8 @@ typedef struct OBJECT
     int dx, dy;
 } OBJECT;
 
-OBJECT user = {20, 100, BAR_AZ, BAR_EL, 0, 40};
-OBJECT comp = {XLIM - 2 * BAR_AZ, 100, BAR_AZ, BAR_EL, 0, -1};
+OBJECT user = {0, 100, BAR_AZ, BAR_EL, 0, 40};
+OBJECT comp = {XLIM - 2.6 * BAR_AZ, 100, BAR_AZ, BAR_EL, 0, -1};
 OBJECT ball = {XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1};
 
 // 도형 그리기
@@ -54,6 +54,9 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
             // bar가 경계 닿지 않을 때에만 이동
             if (!(user.y <= 0))
                 user.y -= user.dy;
+            if (user.y < 0)
+                while (user.y < 0)
+                    user.y++;
             break;
         }
         case VK_DOWN:
@@ -61,6 +64,9 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
             // bar가 경계 닿지 않을 때에만 이동
             if (!(user.y + 1.4 * BAR_EL >= YLIM))
                 user.y += user.dy;
+            if (user.y + 1.4 * BAR_EL >= YLIM)
+                while (user.y + 1.4 * BAR_EL >= YLIM)
+                    user.y--;
             break;
         }
         default:
@@ -126,19 +132,20 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
             }
         }
         // ball이 위나 아래에 부딪히면 반대로
-        if (ball.y < 0 || ball.y + 3.5 * BALL_2R >= YLIM)
+        if (ball.y < 0 || ball.y + 5 * BALL_2R >= YLIM)
             ball.dy = -ball.dy;
-        // 만약 user가 놓침 > init game
+        // 만약 user가 놓침 > exit
         if (ball.x <= 0)
         {
-            // PostQuitMessage(0);
+            PostQuitMessage(0);
+            return;
             //  iniy ball
-            ball.x = 500;
+            /*ball.x = 500;
             ball.y = 250;
             ball.dx = -1;
             ball.dy = -1;
             comp.y = YLIM / 2;
-            comp.dy = 1;
+            comp.dy = 1;*/
         }
         // 만약 comp가 ball을 놓쳐서 오른쪽 바깥으로 나감
         if (XLIM <= ball.x + BALL_2R)
