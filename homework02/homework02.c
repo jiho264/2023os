@@ -4,8 +4,6 @@
 #define YLIM 480
 #define BAR_AZ 20
 #define BAR_EL 100
-#define BOX_AZ 20
-#define BOX_EL 100
 #define BALL_2R 15
 typedef struct OBJECT
 {
@@ -14,15 +12,15 @@ typedef struct OBJECT
     int dx, dy;
 } OBJECT;
 
-OBJECT user = {20, 100, BOX_AZ, BOX_EL, 0, 40};
-OBJECT comp = {XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 0, -1};
+OBJECT user = {20, 100, BAR_AZ, BAR_EL, 0, 40};
+OBJECT comp = {XLIM - 2 * BAR_AZ, 100, BAR_AZ, BAR_EL, 0, -1};
 OBJECT ball = {XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1};
 
 // 도형 그리기
 void Draw_Object(HWND hWnd, HDC hdc, OBJECT prt, BOOL _is_rect)
 {
     if (_is_rect == 1)
-        Rectangle(hdc, prt.x, prt.y, prt.x + BOX_AZ, prt.y + BOX_EL); // 사각형 그리기
+        Rectangle(hdc, prt.x, prt.y, prt.x + BAR_AZ, prt.y + BAR_EL); // 사각형 그리기
     else
         Ellipse(hdc, prt.x, prt.y, prt.x + BALL_2R, prt.y + BALL_2R); // 타원 그리기
     InvalidateRect(hWnd, 0, TRUE);
@@ -61,7 +59,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
         case VK_DOWN:
         {
             // bar가 경계 닿지 않을 때에만 이동
-            if (!(user.y + 1.4 * BOX_EL >= YLIM))
+            if (!(user.y + 1.4 * BAR_EL >= YLIM))
                 user.y += user.dy;
             break;
         }
@@ -86,7 +84,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
         if (comp.y + comp.dy < 0)
             comp.dy = abs(comp.dy);
         // comp bar가 한번 더 움직일 때 하단에 닿을 것 같으면, 이동 방향 반대로
-        else if (comp.y + 1.4 * BOX_EL + comp.dy > YLIM)
+        else if (comp.y + 1.4 * BAR_EL + comp.dy > YLIM)
             comp.dy = -abs(comp.dy);
         // 이동 가능한 범위면, 이동시키기
         else
@@ -94,10 +92,10 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
         // USER BAR BOUNCE
         // 공이 user 왼쪽으로 넘어갈 것 같을 떄,
-        if (ball.x <= user.x + BOX_AZ)
+        if (ball.x <= user.x + BAR_AZ)
         {
             // bar의 내부에 공이 존재한다면, 튕기기
-            if (user.y < ball.y && ball.y + BALL_2R < user.y + BOX_EL)
+            if (user.y < ball.y && ball.y + BALL_2R < user.y + BAR_EL)
             {
                 ball.dx = -ball.dx;
                 // 랠리 성공했으니, level up!
@@ -111,7 +109,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
                 else
                     ball.dy -= 1;
                 // 공이 빠르게 움직였다면 bar를 넘어갈 수 있으니, 공간으로 다시 밀어내기
-                while (ball.x < user.x + BOX_AZ)
+                while (ball.x < user.x + BAR_AZ)
                     ball.x++;
             }
         }
@@ -119,7 +117,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
         // 만약 공이 comp에 닿음 > 그냥 튕기기만
         if (comp.x <= ball.x + BALL_2R)
         {
-            if (comp.y < ball.y && ball.y + BALL_2R < comp.y + BOX_EL)
+            if (comp.y < ball.y && ball.y + BALL_2R < comp.y + BAR_EL)
             {
                 ball.dx = -ball.dx;
                 // 공이 빠르게 움직였다면 bar를 넘어갈 수 있으니, 공간으로 다시 밀어내기
