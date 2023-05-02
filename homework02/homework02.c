@@ -14,9 +14,9 @@ typedef struct OBJECT
     int dx, dy;
 } OBJECT;
 
-OBJECT user = {20, 100, BOX_AZ, BOX_EL, 0, 25};
-OBJECT comp = {XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 0, -1};
-OBJECT ball = {XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1};
+OBJECT user = { 20, 100, BOX_AZ, BOX_EL, 0, 25 };
+OBJECT comp = { XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 0, -1 };
+OBJECT ball = { XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1 };
 
 // 도형 그리기
 void Draw_Object(HWND hWnd, HDC hdc, HBRUSH hBrush, OBJECT prt, BOOL _is_rect)
@@ -78,17 +78,26 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
     }
     case WM_PAINT:
     {
-
+        int bb = ball.y;
         ball.x += ball.dx;
         ball.y += ball.dy;
 
         // comp의 기본 움직임
-        // bar가 경계 닿는 순간에 방향 반대로
-        if (comp.y <= 0 || comp.y + 1.4 * BOX_EL >= YLIM)
-        {
-            comp.dy = -comp.dy;
+
+        if (bb < ball.y)
+            comp.dy = abs(comp.dy);
+        else
+            comp.dy = -abs(comp.dy);
+
+        if (comp.y + comp.dy < 0) {
+            comp.dy = abs(comp.dy);
         }
-        comp.y += comp.dy;
+        else if (comp.y + 1.4 * BOX_EL + comp.dy > YLIM)
+        {
+            comp.dy = -abs(comp.dy);
+        }
+        else
+            comp.y += comp.dy;
 
         // 만약 공이 user에 닿음 > 튕기고 속도 2배
         if (ball.x <= user.x + BOX_AZ)
@@ -129,6 +138,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
             ball.y = 250;
             ball.dx = -1;
             ball.dy = -1;
+            comp.y = YLIM / 2;
             comp.dy = 1;
         }
         // 만약 comp가 ball을 놓쳐서 오른쪽 바깥으로 나감
@@ -170,7 +180,7 @@ INT APIENTRY WinMain(
     _In_ LPSTR cmd,
     _In_ INT nShow)
 {
-    WNDCLASS wndclass = {0};
+    WNDCLASS wndclass = { 0 };
     wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); // 흰색 브러쉬 핸들
     wndclass.hCursor = LoadCursor(0, IDC_ARROW);                  // 마우스 커서 핸들
     wndclass.hIcon = LoadIcon(0, IDI_APPLICATION);                // 아이콘 핸들
@@ -183,13 +193,13 @@ INT APIENTRY WinMain(
 
     // 윈도우 인스턴스 생성
     HWND hWnd = CreateWindow(MY_DRAW_WND,         // 클래스 이름
-                             TEXT("homework02"),  // 캡션 명
-                             WS_OVERLAPPEDWINDOW, // 윈도우 스타일
-                             10, 10, XLIM, YLIM,  // 좌,상,폭,높이
-                             0,                   // 부모 윈도우 핸들
-                             0,                   // 메뉴 핸들
-                             hIns,                // 인스턴스 핸들
-                             0);                  // 생성 시 전달 인자
+        TEXT("homework02"),  // 캡션 명
+        WS_OVERLAPPEDWINDOW, // 윈도우 스타일
+        10, 10, XLIM, YLIM,  // 좌,상,폭,높이
+        0,                   // 부모 윈도우 핸들
+        0,                   // 메뉴 핸들
+        hIns,                // 인스턴스 핸들d
+        0);                  // 생성 시 전달 인자
 
     ShowWindow(hWnd, nShow); // 윈도우 인스턴스 시각화, SW_SHOW(시각화), SW_HIDE(비시각화)
     MSG Message;
