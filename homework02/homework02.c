@@ -14,7 +14,7 @@ typedef struct OBJECT
     int dx, dy;
 } OBJECT;
 
-OBJECT user = {20, 100, BOX_AZ, BOX_EL, 0, 25};
+OBJECT user = {20, 100, BOX_AZ, BOX_EL, 0, 40};
 OBJECT comp = {XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 0, -1};
 OBJECT ball = {XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1};
 
@@ -27,6 +27,7 @@ void Draw_Object(HWND hWnd, HDC hdc, OBJECT prt, BOOL _is_rect)
         Ellipse(hdc, prt.x, prt.y, prt.x + BALL_2R, prt.y + BALL_2R); // 타원 그리기
     InvalidateRect(hWnd, 0, TRUE);
 }
+
 // 그리기 작업
 void Draw_ALL(HWND hWnd)
 {
@@ -40,7 +41,7 @@ void Draw_ALL(HWND hWnd)
     EndPaint(hWnd, &ps);
 }
 
-/* key*/
+/* callback function */
 LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
     switch (iMessage)
@@ -49,23 +50,18 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
     {
         switch (wParam)
         {
+            // USER BAR MOVE
         case VK_UP:
         {
-            // bar가 경계 닿는 순간 이동 블로킹
-            if (user.y <= 0)
-            {
-            }
-            else
+            // bar가 경계 닿지 않을 때에만 이동
+            if (!(user.y <= 0))
                 user.y -= user.dy;
             break;
         }
         case VK_DOWN:
         {
-            // bar가 경계 닿는 순간 이동 블로킹
-            if (user.y + 1.4 * BOX_EL >= YLIM)
-            {
-            }
-            else
+            // bar가 경계 닿지 않을 때에만 이동
+            if (!(user.y + 1.4 * BOX_EL >= YLIM))
                 user.y += user.dy;
             break;
         }
@@ -75,63 +71,70 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
     }
     case WM_PAINT:
     {
+        // BALL MOVE
         int bb = ball.y;
         ball.x += ball.dx;
         ball.y += ball.dy;
 
-        // comp의 기본 움직임
-
+        // COMP BAR MOVE
+        // ball의 이동방향과 comp bar의 이동 방향 맞추기.
         if (bb < ball.y)
             comp.dy = abs(comp.dy);
         else
             comp.dy = -abs(comp.dy);
-
+        // comp bar가 한번 더 움직일 때 상단에 닿을 것 같으면, 이동 방향 반대로
         if (comp.y + comp.dy < 0)
-        {
             comp.dy = abs(comp.dy);
-        }
+        // comp bar가 한번 더 움직일 때 하단에 닿을 것 같으면, 이동 방향 반대로
         else if (comp.y + 1.4 * BOX_EL + comp.dy > YLIM)
-        {
             comp.dy = -abs(comp.dy);
-        }
+        // 이동 가능한 범위면, 이동시키기
         else
             comp.y += comp.dy;
 
-        // 만약 공이 user에 닿음 > 튕기고 속도 2배
+        // USER BAR BOUNCE
+        // 공이 user 왼쪽으로 넘어갈 것 같을 떄,
         if (ball.x <= user.x + BOX_AZ)
         {
+            // bar의 내부에 공이 존재한다면, 튕기기
             if (user.y < ball.y && ball.y + BALL_2R < user.y + BOX_EL)
             {
                 ball.dx = -ball.dx;
-                // level up!
+                // 랠리 성공했으니, level up!
+                // 공 속도 두배~
                 if (ball.dx >= 0)
                     ball.dx += 1;
                 else
                     ball.dx -= 1;
-
                 if (ball.dy >= 0)
                     ball.dx += 1;
                 else
                     ball.dy -= 1;
+                // 공이 빠르게 움직였다면 bar를 넘어갈 수 있으니, 공간으로 다시 밀어내기
+                while (ball.x < user.x + BOX_AZ)
+                    ball.x++;
             }
         }
+        // COMP BAR BOUNCE
         // 만약 공이 comp에 닿음 > 그냥 튕기기만
         if (comp.x <= ball.x + BALL_2R)
         {
             if (comp.y < ball.y && ball.y + BALL_2R < comp.y + BOX_EL)
             {
                 ball.dx = -ball.dx;
+                // 공이 빠르게 움직였다면 bar를 넘어갈 수 있으니, 공간으로 다시 밀어내기
+                while (ball.x > comp.x)
+                    ball.x--;
             }
         }
         // ball이 위나 아래에 부딪히면 반대로
         if (ball.y < 0 || ball.y + 3.5 * BALL_2R >= YLIM)
-        {
             ball.dy = -ball.dy;
-        }
         // 만약 user가 놓침 > init game
         if (ball.x <= 0)
         {
-            // iniy ball
+            // PostQuitMessage(0);
+            //  iniy ball
             ball.x = 500;
             ball.y = 250;
             ball.dx = -1;
@@ -152,11 +155,6 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
                 ball.dx += 1;
             else
                 ball.dx -= 1;
-
-            if (ball.dy >= 0)
-                ball.dx += 1;
-            else
-                ball.dy -= 1;
             // iniy ball
             ball.x = 500;
             ball.y = 250;
