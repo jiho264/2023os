@@ -108,6 +108,11 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
                     ball.dx += 1;
                 else
                     ball.dx -= 1;
+
+                if (ball.dy >= 0)
+                    ball.dx += 1;
+                else
+                    ball.dy -= 1;
             }
         }
         // 만약 공이 comp에 닿음 > 그냥 튕기기만
@@ -147,6 +152,11 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
                 ball.dx += 1;
             else
                 ball.dx -= 1;
+
+            if (ball.dy >= 0)
+                ball.dx += 1;
+            else
+                ball.dy -= 1;
             // iniy ball
             ball.x = 500;
             ball.y = 250;
