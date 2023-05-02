@@ -48,13 +48,14 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
     {
         switch (wParam)
         {
-            // USER BAR MOVE
+        // USER BAR MOVE
         case VK_UP:
         {
             // bar가 경계 닿지 않을 때에만 이동
             if (!(user.y <= 0))
                 user.y -= user.dy;
             if (user.y < 0)
+                // 경계 넘어가면 그 만큼 되돌아오게 해서 맵 밖으로 삐져나가지 않게 함.
                 while (user.y < 0)
                     user.y++;
             break;
@@ -65,6 +66,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
             if (!(user.y + 1.4 * BAR_EL >= YLIM))
                 user.y += user.dy;
             if (user.y + 1.4 * BAR_EL >= YLIM)
+                // 경계 넘어가면 그 만큼 되돌아오게 해서 맵 밖으로 삐져나가지 않게 함.
                 while (user.y + 1.4 * BAR_EL >= YLIM)
                     user.y--;
             break;
@@ -150,7 +152,7 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
         // 만약 comp가 ball을 놓쳐서 오른쪽 바깥으로 나감
         if (XLIM <= ball.x + BALL_2R)
         {
-            // level up!
+            // level up! 공과 comp bar의 이동속도 ++
             if (comp.dy >= 0)
                 comp.dy += 1;
             else
@@ -215,6 +217,8 @@ INT APIENTRY WinMain(
 
 /*
 참고 블로그
+- 스켈레톤 코드는 해당 블로그의 3번, 7번 글에서 따왔음.
+- rect 그리는 방법과, 이를 갱신하는 InvalidateRect(), 그리고 winmain 작성 요령을 참고함.
 https://ehpub.co.kr/7-%ec%b2%ab-%eb%b2%88%ec%a7%b8-%ec%8b%a4%ec%8a%b5-%eb%8f%84%ed%98%95-%ec%9d%b4%eb%8f%99-%ec%8b%9c%ed%82%a4%ea%b8%b0/
 
 */
