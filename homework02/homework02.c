@@ -14,21 +14,18 @@ typedef struct OBJECT
     int dx, dy;
 } OBJECT;
 
-OBJECT user = { 20, 100, BOX_AZ, BOX_EL, 0, 25 };
-OBJECT comp = { XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 0, -1 };
-OBJECT ball = { XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1 };
+OBJECT user = {20, 100, BOX_AZ, BOX_EL, 0, 25};
+OBJECT comp = {XLIM - 2 * BOX_AZ, 100, BOX_AZ, BOX_EL, 0, -1};
+OBJECT ball = {XLIM / 2 - 100, YLIM / 2, BALL_2R, BALL_2R, -1, -1};
 
 // 도형 그리기
-void Draw_Object(HWND hWnd, HDC hdc, HBRUSH hBrush, OBJECT prt, BOOL _is_rect)
+void Draw_Object(HWND hWnd, HDC hdc, OBJECT prt, BOOL _is_rect)
 {
-    HBRUSH oBrush;                              // DC에 기존 선택 브러쉬 핸들 기억할 변수
-    oBrush = (HBRUSH)SelectObject(hdc, hBrush); // 입력 인자로 전달받은 브러쉬를 DC에 선택
     if (_is_rect == 1)
         Rectangle(hdc, prt.x, prt.y, prt.x + BOX_AZ, prt.y + BOX_EL); // 사각형 그리기
     else
         Ellipse(hdc, prt.x, prt.y, prt.x + BALL_2R, prt.y + BALL_2R); // 타원 그리기
     InvalidateRect(hWnd, 0, TRUE);
-    SelectObject(hdc, oBrush); // 기존 선택 브러쉬를 DC에 선택
 }
 // 그리기 작업
 void Draw_ALL(HWND hWnd)
@@ -37,9 +34,9 @@ void Draw_ALL(HWND hWnd)
     // TextOut(hdc, 100, 100, "x", 1);
     PAINTSTRUCT ps;
     BeginPaint(hWnd, &ps);
-    Draw_Object(hWnd, ps.hdc, CreateSolidBrush(RGB(255, 0, 0)), user, 1);
-    Draw_Object(hWnd, ps.hdc, CreateSolidBrush(RGB(0, 255, 0)), comp, 1);
-    Draw_Object(hWnd, ps.hdc, CreateSolidBrush(RGB(0, 0, 0)), ball, 0);
+    Draw_Object(hWnd, ps.hdc, user, 1);
+    Draw_Object(hWnd, ps.hdc, comp, 1);
+    Draw_Object(hWnd, ps.hdc, ball, 0);
     EndPaint(hWnd, &ps);
 }
 
@@ -89,7 +86,8 @@ LRESULT CALLBACK MyWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
         else
             comp.dy = -abs(comp.dy);
 
-        if (comp.y + comp.dy < 0) {
+        if (comp.y + comp.dy < 0)
+        {
             comp.dy = abs(comp.dy);
         }
         else if (comp.y + 1.4 * BOX_EL + comp.dy > YLIM)
@@ -180,8 +178,8 @@ INT APIENTRY WinMain(
     _In_ LPSTR cmd,
     _In_ INT nShow)
 {
-    WNDCLASS wndclass = { 0 };
-    wndclass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); // 흰색 브러쉬 핸들
+    WNDCLASS wndclass = {0};
+    wndclass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH); // 흰색 브러쉬 핸들
     wndclass.hCursor = LoadCursor(0, IDC_ARROW);                  // 마우스 커서 핸들
     wndclass.hIcon = LoadIcon(0, IDI_APPLICATION);                // 아이콘 핸들
     wndclass.hInstance = GetModuleHandle(0);                      // 자신 모듈의 인스턴스 핸들
@@ -193,13 +191,13 @@ INT APIENTRY WinMain(
 
     // 윈도우 인스턴스 생성
     HWND hWnd = CreateWindow(MY_DRAW_WND,         // 클래스 이름
-        TEXT("homework02"),  // 캡션 명
-        WS_OVERLAPPEDWINDOW, // 윈도우 스타일
-        10, 10, XLIM, YLIM,  // 좌,상,폭,높이
-        0,                   // 부모 윈도우 핸들
-        0,                   // 메뉴 핸들
-        hIns,                // 인스턴스 핸들d
-        0);                  // 생성 시 전달 인자
+                             TEXT("homework02"),  // 캡션 명
+                             WS_OVERLAPPEDWINDOW, // 윈도우 스타일
+                             10, 10, XLIM, YLIM,  // 좌,상,폭,높이
+                             0,                   // 부모 윈도우 핸들
+                             0,                   // 메뉴 핸들
+                             hIns,                // 인스턴스 핸들d
+                             0);                  // 생성 시 전달 인자
 
     ShowWindow(hWnd, nShow); // 윈도우 인스턴스 시각화, SW_SHOW(시각화), SW_HIDE(비시각화)
     MSG Message;
