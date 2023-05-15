@@ -2,9 +2,9 @@
 	pmark=
 	version=2
 [debug-]
-	target="x:\aaa.exe"
+	target="x:\_hello1.exe"
 [cv]
-	wndstate=0 1 0 2 0 0 0 1 0 1 254
+	wndstate=0 1 0 1 0 0 0 2 0 1 254
 	tilestate=1 24 0 80 0 0 0 67 0 5 0 0 0 0 18 0 0 254
 	command=use auto
 	command=n10
