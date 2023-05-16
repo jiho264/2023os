@@ -1,0 +1,28 @@
+CODE SEGMENT
+    ASSUME CS: CODE
+    ; INIT
+    MOV AX, 1234H
+    MOV BX, 5678H ; SP = 0
+
+    ; STACK - PUSH
+    PUSH AX       ; SP = FFFEH
+    PUSH BX       ; SP = FFFCH
+    PUSHF         ; SP = FFFAH
+
+    ; CHANGE VALUE
+    MOV AX, 2468H
+    MOV BX, 2468H
+    SUB AX, BX
+
+    ; STACK - POP
+    POPF          ; SP - FFFCH
+    POP BX        ; SP = FFFEH
+    POP AX        ; SP = 0
+
+    MOV AH, 4CH
+    INT 21H
+CODE ENDS
+END
+
+; MASM VARIABLE == ALWAYS GLOBAL VARIABLE
+; IF NEED LOCAL VARIABLE > USE STACK

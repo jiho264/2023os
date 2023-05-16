@@ -1,0 +1,22 @@
+CODE SEGMENT
+    ASSUME CS:CODE, DS:DATA
+
+    MOV AX, DATA
+    MOV DS, AX
+
+    MOV BX, DS ; VAR1 address
+
+    MOV AH, BYTE PTR [BX + 0]
+    MOV AL, BYTE PTR [BX + 2]
+    
+    ADD AH, AL
+    MOV VAR2, AX
+
+    MOV AX, 4C00H
+    INT 21H
+CODE ENDS
+DATA SEGMENT
+    VAR1 DW 1234H
+    VAR2 DW ?
+DATA ENDS
+    END
