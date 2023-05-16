@@ -20,3 +20,13 @@ END
 
 ; 응용문제 >> 거꾸로 출력하기, 홀수 or 짝수만 출력해보기
 ; 모음은 출력하지 말아라
+
+
+; MOV DX, [STRING ADDRESS]
+; MOV AH, 9
+; INT 21H >> WRITE STRING
+
+
+; DX = 'H' ADDRESS 
+; STRING END POINT == $
+; "HELLOWORLD$"
