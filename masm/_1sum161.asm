@@ -1,3 +1,7 @@
+;
+; var1(H), var2(L) 32bit 
+; var3(H), var4(L) 32bit 
+; add >> var1(H), var2(L) 
 CODE SEGMENT
     ASSUME CS:CODE, DS:DATA
 

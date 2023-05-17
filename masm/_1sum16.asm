@@ -1,3 +1,6 @@
+;
+; hex adder
+; attention carry flag
 CODE SEGMENT
     ASSUME CS:CODE, DS:DATA
 
@@ -18,7 +21,6 @@ CODE SEGMENT
     MOV AH, 4CH
     INT 21H
 CODE ENDS
-
 DATA SEGMENT
     VAR1 DW ?
     VAR2 DW ?
