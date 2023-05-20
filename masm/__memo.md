@@ -1,11 +1,9 @@
 - https://github.com/jiho264/2023os/blob/main/masm/__memo.md
 
 # input (save input to AX)
-- echo input
-
+echo input
     MOV AH, 1
-- non-echo input
-
+non-echo input
     MOV AH, 8
     
 # output (save output to DX)
