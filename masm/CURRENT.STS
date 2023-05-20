@@ -2,7 +2,7 @@
 	pmark=
 	version=2
 [debug-]
-	target="x:\_avisum1.exe"
+	target="x:\__easy2.exe"
 [cv]
 	wndstate=0 1 1 2 0 0 0 1 0 1 254
 	tilestate=1 24 0 80 0 0 0 67 0 5 0 0 0 0 18 0 34 254
