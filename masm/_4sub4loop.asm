@@ -1,3 +1,4 @@
+; in ppt
 .model small
 .stack 100h
 .data  
