@@ -93,7 +93,28 @@
         VAR4 DB 'hello world$'
     CODE ENDS
         END INIT
+# print [0 99]
+    PRINT_ANS:
+        MOV AX, Bx
+        MOV BL, 10
+        DIV BL
+        MOV NUM10, AL
+        MOV NUM1, AH
+        MOV DX, OFFSET NUM10
 
+        cmp num10, 0
+        jne EXIT
+
+        MOV DX, OFFSET NUM1
+        EXIT: ; CONVERT TO ASCII CODE
+            ADD NUM10, '0'
+            ADD NUM1, '0'
+            MOV AH, 9
+            INT 21H
+        RET
+
+    NUM10 DB ?
+    NUM1 DB ?
 # print decimal
     ; https://www.geeksforgeeks.org/8086-program-to-print-a-16-bit-decimal-number/
     ;8086 program to print a 16 bit decimal number
