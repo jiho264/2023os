@@ -3,21 +3,17 @@
 MAIN SEGMENT
     ASSUME CS:MAIN, DS:data
 PRINT_ANS:
-    MOV AX, SUM
-    CMP AX, 10
-    JB UNDER10
-
+    MOV AX, sum
     MOV BL, 10
     DIV BL
     MOV NUM10, AL
     MOV NUM1, AH
     MOV DX, OFFSET NUM10
-    JMP EXIT
-    
-    UNDER10: ; IF ANS < 10
-        MOV AX, SUM
-        MOV NUM1, AL
-        MOV DX, OFFSET NUM1
+
+    cmp num10, 0
+    jne EXIT
+
+    MOV DX, OFFSET NUM1
     EXIT: ; CONVERT TO ASCII CODE
         ADD NUM10, '0'
         ADD NUM1, '0'

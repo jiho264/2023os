@@ -1,21 +1,17 @@
 CODE SEGMENT
     ASSUME CS:CODE, DS:DATA
 PRINT_ANS:
-    MOV AX, [SI]    
-    CMP AX, 10
-    JB UNDER10
-
+    MOV AX, [si]
     MOV BL, 10
     DIV BL
     MOV NUM10, AL
     MOV NUM1, AH
     MOV DX, OFFSET NUM10
-    JMP EXIT
-    
-    UNDER10: ; IF ANS < 10
-        MOV AX, [SI]
-        MOV NUM1, AL
-        MOV DX, OFFSET NUM1
+
+    cmp num10, 0
+    jne EXIT
+
+    MOV DX, OFFSET NUM1
     EXIT: ; CONVERT TO ASCII CODE
         ADD NUM10, '0'
         ADD NUM1, '0'
