@@ -1,5 +1,22 @@
 ; find min, max number
+
+
+
+
+
+
+
+
 ; todo find max+min
+
+
+
+
+
+
+
+
+
 main segment
     assume cs:main, ds:main
 init:
