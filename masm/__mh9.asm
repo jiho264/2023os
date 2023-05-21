@@ -1,66 +1,75 @@
-; find min, max number
+; FIND MIN, MAX NUMBER
+; TODO FIND MAX+MIN
+MAIN SEGMENT
+    ASSUME CS:MAIN, DS:data
+PRINT_ANS:
+    MOV AX, SUM
+    CMP AX, 10
+    JB UNDER10
 
-
-
-
-
-
-
-
-; todo find max+min
-
-
-
-
-
-
-
-
-
-main segment
-    assume cs:main, ds:main
-init:
-    mov ax, cs
-    mov ds, ax
-
-    mov di, offset arr ; any index register
-    mov ax, [di]
+    MOV BL, 10
+    DIV BL
+    MOV NUM10, AL
+    MOV NUM1, AH
+    MOV DX, OFFSET NUM10
+    JMP EXIT
     
-    mov min, ax
-    mov max, ax
-    ;add dl, 2
-    mov cx, 7 ; loop length
+    UNDER10: ; IF ANS < 10
+        MOV AX, SUM
+        MOV NUM1, AL
+        MOV DX, OFFSET NUM1
+    EXIT: ; CONVERT TO ASCII CODE
+        ADD NUM10, '0'
+        ADD NUM1, '0'
+        MOV AH, 9
+        INT 21H
+    RET
+INIT:
+    MOV AX, data
+    MOV DS, AX
 
-A1:
-    mov ax, [di]
-    cmp ax, min
-    jge A2
-    mov min, ax
+    MOV DI, OFFSET ARR ; ANY INDEX REGISTER
+    MOV AX, [DI]
+    
+    MOV MIN, AX
+    MOV MAX, AX
+    ;ADD DL, 2
+    MOV CX, 7 ; LOOP LENGTH
 
-A2: 
-    cmp ax, max
-    jle A3
-    mov max, ax
+    A1:
+        MOV AX, [DI]
+        CMP AX, MIN
+        JGE A2
+        MOV MIN, AX
 
-A3:
-    add di, 2 ; word array
-    loop A1 ; loop 6 time
+        A2: 
+            CMP AX, MAX
+            JLE A3
+            MOV MAX, AX
 
-print:
-    mov dx, min
-    add dx, '0'
-    mov ah, 2
-    int 21H
-    mov dx, max
-    add dx, '0'
-    mov ah, 2
-    int 21H
+        A3:
+            ADD DI, 2 ; WORD ARRAY
+    LOOP A1 ; LOOP 6 TIME
 
-    mov ah, 4ch
-    int 21h
-min dw ?
-max dw ?
-arr dw 3, 7, 4, 5, 2, 1, 8
+PRINT:
+    ; PRINT SUM
+    MOV AX, MAX
+    ADD AX, MIN
+    MOV SUM, AX
 
-main ends
-    end init
+    call PRINT_ANS
+    ; terminate
+    MOV AH, 4CH
+    INT 21H
+
+data SEGMENT
+    MIN DW ?
+    MAX DW ?
+    SUM DW ?
+    num10 db ?
+    num1 db ?
+    theend db '$'
+    ARR DW 3, 7, 4, 15, 2, 62, 8
+data ends
+MAIN ENDS
+    END INIT

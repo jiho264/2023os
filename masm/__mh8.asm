@@ -1,21 +1,22 @@
 CODE SEGMENT
     ASSUME CS:CODE, DS:DATA
 PRINT_ANS:
-    CMP ANS, 10
+    MOV AX, [SI]    
+    CMP AX, 10
     JB UNDER10
-    UPPER10: ; IF ANS >= 10
-        MOV AX, ANS
-        MOV BL, 10
-        DIV BL
-        MOV NUM10, AL
-        MOV NUM1, AH
-        MOV DX, OFFSET NUM10
-        JMP EXIT
-    UNDER10: ; if ans < 10
-        MOV AX, ANS
+
+    MOV BL, 10
+    DIV BL
+    MOV NUM10, AL
+    MOV NUM1, AH
+    MOV DX, OFFSET NUM10
+    JMP EXIT
+    
+    UNDER10: ; IF ANS < 10
+        MOV AX, [SI]
         MOV NUM1, AL
         MOV DX, OFFSET NUM1
-    EXIT: ; convert to ascii code
+    EXIT: ; CONVERT TO ASCII CODE
         ADD NUM10, '0'
         ADD NUM1, '0'
         MOV AH, 9
@@ -23,7 +24,7 @@ PRINT_ANS:
     RET
 
 STR_PRINT:
-    ADD A, '0' ; CONVERT to ASCII CODE
+    ADD A, '0' ; CONVERT TO ASCII CODE
     ADD B, '0'
     MOV DX, OFFSET A ; PRINT START ADDRESS
     MOV AH, 9
@@ -37,12 +38,17 @@ INIT:
     MOV AX, DATA ; INIT DATA SEGMENT ADDRESS
     MOV DS, AX
     MOV CX, 9 ; SET LOOP LENGTH
+
+    MOV SI, OFFSET ANS_TABLE
+
 NUM:
     MOV AL, A 
     MUL B
-    MOV ANS, AX ; ANS = A * B
     
+    MOV [SI], AX ; ANS = A * B
     CALL STR_PRINT ; PRINT
+    INC SI
+    INC SI
     LOOP NUM ; TABLE LOOP
 
     MOV AH, 4CH ; TERMINATE
@@ -53,7 +59,7 @@ DATA SEGMENT
     STAR DB ' * '
     B DB 1
     RESULT DB ' = $'
-    ANS DW ?
+    ANS_TABLE DW ?, ?, ?, ?, ?, ?, ?, ?, ?
     NUM10 DB ?
     NUM1 DB ?
     ENDSIGN DB 0DH, 0AH, '$'
