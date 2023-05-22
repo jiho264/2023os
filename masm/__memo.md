@@ -1,80 +1,80 @@
-- https://github.com/jiho264/2023os/blob/main/masm/__memo.md
+- HTTPS://GITHUB.COM/JIHO264/2023OS/BLOB/MAIN/MASM/__MEMO.MD
 
-# input (save input to AX)
-- echo input
+# INPUT (SAVE INPUT TO AX)
+- ECHO INPUT
     MOV AH, 1
-- non-echo input
+- NON-ECHO INPUT
     MOV AH, 8
     
-# output (save output to DX)
-- print word
+# OUTPUT (SAVE OUTPUT TO DX)
+- PRINT WORD
     MOV AH, 2 (PRINT DX)
-- print string (start address to $)
+- PRINT STRING (START ADDRESS TO $)
     MOV AH, 9 (PRINT [DX ~~ $])
-- print enter
+- PRINT ENTER
     MOV DL, CR (CR EQU 0DH)
     +
     MOV DL, LF (LF EQU 0AH)
     
-# four arithmetic operations
-- addtion (OP1 += OP2)
-    add OP1, OP2
+# FOUR ARITHMETIC OPERATIONS
+- ADDTION (OP1 += OP2)
+    ADD OP1, OP2
     
-    add al, bl
-    adc ah, bh (carry flag)
-- subtration (OP1 -= OP2)
-    sub OP1, OP2
-- multiplication
-    size | source1 | source 2 | destination
-     DB  |   AL    |   r/m8   |    AX
-     DW  |   AX    |   r/m16  |   DX:AX (DX needs to be initialized)
-- division
-    size | dividend | divisor | quitient | remainder | maximum quotient
-     DB  |    AX    |  r/m8   |    AL    |    AH     |      255
-     DW  |    AX    |  r/m8   |    AL    |    AH     |      255
-     DW  |   DX:AX  |  r/m16  |    AX    |    DX     |     65535 (DX needs to be initialized)
+    ADD AL, BL
+    ADC AH, BH (CARRY FLAG)
+- SUBTRATION (OP1 -= OP2)
+    SUB OP1, OP2
+- MULTIPLICATION
+    SIZE | SOURCE1 | SOURCE 2 | DESTINATION
+     DB  |   AL    |   R/M8   |    AX
+     DW  |   AX    |   R/M16  |   DX:AX (DX NEEDS TO BE INITIALIZED)
+- DIVISION
+    SIZE | DIVIDEND | DIVISOR | QUITIENT | REMAINDER | MAXIMUM QUOTIENT
+     DB  |    AX    |  R/M8   |    AL    |    AH     |      255
+     DW  |    AX    |  R/M8   |    AL    |    AH     |      255
+     DW  |   DX:AX  |  R/M16  |    AX    |    DX     |     65535 (DX NEEDS TO BE INITIALIZED)
 
-# compare
-- usage
-    cmp OP1, OP2
-- OP1 > OP2 (above, great)
-    ja ~
-    jg ~
-- OP1 < OP2 (below, less)
-    jb ~
-    jl ~
-- OP1 == OP2 (equal)
-    je ~
-- OP1 != OP2 (not equal)
-    jne ~
+# COMPARE
+- USAGE
+    CMP OP1, OP2
+- OP1 > OP2 (ABOVE, GREAT)
+    JA ~
+    JG ~
+- OP1 < OP2 (BELOW, LESS)
+    JB ~
+    JL ~
+- OP1 == OP2 (EQUAL)
+    JE ~
+- OP1 != OP2 (NOT EQUAL)
+    JNE ~
 
-# loop
-- usage
-    mov cx, N
+# LOOP
+- USAGE
+    MOV CX, N
 
-    order:
-        (auto cx--)
-    loop order
+    ORDER:
+        (AUTO CX--)
+    LOOP ORDER
 
-# stack
-- push (OP1 into stack)
-    push OP1
-    pushf
-- pop (top into OP2)
-    pop OP2
-    popf
+# STACK
+- PUSH (OP1 INTO STACK)
+    PUSH OP1
+    PUSHF
+- POP (TOP INTO OP2)
+    POP OP2
+    POPF
 
-# address index
-- usage (use any index register)
-    opcode [di]
+# ADDRESS INDEX
+- USAGE (USE ANY INDEX REGISTER)
+    OPCODE [DI]
 
-# create variable
-- 1byte   
+# CREATE VARIABLE
+- 1BYTE   
     VAR1 DB ?
-- 2byte   
+- 2BYTE   
     VAR1 DW ?
 
-# skeleton code
+# SKELETON CODE
     CODE SEGMENT
         ASSUME CS:CODE, DS:CODE
 
@@ -82,28 +82,28 @@
         MOV AX, CS
         MOV DS, AX
 
-        <your code here>
+        <YOUR CODE HERE>
 
         MOV AH, 4C00H
         INT 21H
 
-        VAR1 DB ? (1byte)
-        VAR2 DW ? (2byte)
+        VAR1 DB ? (1BYTE)
+        VAR2 DW ? (2BYTE)
         VAR3 DW 15, 53, 34, ...
-        VAR4 DB 'hello world$'
+        VAR4 DB 'HELLO WORLD$'
     CODE ENDS
         END INIT
-# print [0 99]
+# PRINT [0 99]
     PRINT_ANS:
-        MOV AX, Bx
+        MOV AX, ANS
         MOV BL, 10
         DIV BL
         MOV NUM10, AL
         MOV NUM1, AH
         MOV DX, OFFSET NUM10
 
-        cmp num10, 0
-        jne EXIT
+        CMP NUM10, 0
+        JNE EXIT
 
         MOV DX, OFFSET NUM1
         EXIT: ; CONVERT TO ASCII CODE
@@ -113,172 +113,173 @@
             INT 21H
         RET
 
+    ANS DW ?
     NUM10 DB ?
     NUM1 DB ?
-# print decimal
-    ; https://www.geeksforgeeks.org/8086-program-to-print-a-16-bit-decimal-number/
-    ;8086 program to print a 16 bit decimal number
+# PRINT DECIMAL
+    ; HTTPS://WWW.GEEKSFORGEEKS.ORG/8086-PROGRAM-TO-PRINT-A-16-BIT-DECIMAL-NUMBER/
+    ;8086 PROGRAM TO PRINT A 16 BIT DECIMAL NUMBER
     .MODEL SMALL
     .STACK 100H
     .DATA
-    ; printable range [0 65535]
-    d1 dw 65535
+    ; PRINTABLE RANGE [0 65535]
+    D1 DW 65535
     .CODE
     MAIN PROC FAR
         MOV AX,@DATA
         MOV DS,AX   
         
-        ;load the value stored
-        ; in variable d1
-        mov ax,d1      
+        ;LOAD THE VALUE STORED
+        ; IN VARIABLE D1
+        MOV AX,D1      
         
-        ;print the value
+        ;PRINT THE VALUE
         CALL PRINT     
         
-        ;interrupt to exit              
+        ;INTERRUPT TO EXIT              
         MOV AH,4CH
         INT 21H
 
     MAIN ENDP
     PRINT PROC          
         
-        ;initialize count
-        mov cx,0
-        mov dx,0
-        label1:
-            ; if ax is zero
-            cmp ax,0
-            je print1     
+        ;INITIALIZE COUNT
+        MOV CX,0
+        MOV DX,0
+        LABEL1:
+            ; IF AX IS ZERO
+            CMP AX,0
+            JE PRINT1     
             
-            ;initialize bx to 10
-            mov bx,10       
+            ;INITIALIZE BX TO 10
+            MOV BX,10       
             
-            ; extract the last digit
-            div bx                 
+            ; EXTRACT THE LAST DIGIT
+            DIV BX                 
 
-            ; div == ax / bx 
-            ; ax /= bx
-            ; dx = ax % bx
+            ; DIV == AX / BX 
+            ; AX /= BX
+            ; DX = AX % BX
 
-            ;push it in the stack
-            push dx             
+            ;PUSH IT IN THE STACK
+            PUSH DX             
             
-            ;increment the count
-            inc cx             
+            ;INCREMENT THE COUNT
+            INC CX             
             
-            ;set dx to 0
-            xor dx,dx
-            ; dx는 자신과 같으니, xor dx, dx == always zero.
-            jmp label1
-        print1:
-            ; cx == stack size
+            ;SET DX TO 0
+            XOR DX,DX
+            ; DX는 자신과 같으니, XOR DX, DX == ALWAYS ZERO.
+            JMP LABEL1
+        PRINT1:
+            ; CX == STACK SIZE
 
-            ;check if count
-            ;is greater than zero
-            cmp cx,0
-            je exit
+            ;CHECK IF COUNT
+            ;IS GREATER THAN ZERO
+            CMP CX,0
+            JE EXIT
             
-            ;pop the top of stack
-            pop dx
+            ;POP THE TOP OF STACK
+            POP DX
             
-            ;add 48 so that it
-            ;represents the ASCII
-            ;value of digits
-            add dx,48
+            ;ADD 48 SO THAT IT
+            ;REPRESENTS THE ASCII
+            ;VALUE OF DIGITS
+            ADD DX,48
             
-            ;interrupt to print a
-            ;character
-            mov ah,02h
-            int 21h
+            ;INTERRUPT TO PRINT A
+            ;CHARACTER
+            MOV AH,02H
+            INT 21H
             
-            ;decrease the count
-            dec cx
-            jmp print1
-    exit:
-    ret
+            ;DECREASE THE COUNT
+            DEC CX
+            JMP PRINT1
+    EXIT:
+    RET
     PRINT ENDP
     END MAIN
 
-# print hexadecimal
-    ; https://www.geeksforgeeks.org/8086-program-to-print-a-16-bit-decimal-number/
-    ;8086 program to print a 16 bit hex number
+# PRINT HEXADECIMAL
+    ; HTTPS://WWW.GEEKSFORGEEKS.ORG/8086-PROGRAM-TO-PRINT-A-16-BIT-DECIMAL-NUMBER/
+    ;8086 PROGRAM TO PRINT A 16 BIT HEX NUMBER
     .MODEL SMALL
     .STACK 100H
     .DATA
-    ; printable range [0 65535]
-    d1 dw 0faa1h
+    ; PRINTABLE RANGE [0 65535]
+    D1 DW 0FAA1H
     .CODE
     MAIN PROC FAR
         MOV AX,@DATA
         MOV DS,AX   
         
-        ;load the value stored
-        ; in variable d1
-        mov ax,d1      
+        ;LOAD THE VALUE STORED
+        ; IN VARIABLE D1
+        MOV AX,D1      
         
-        ;print the value
+        ;PRINT THE VALUE
         CALL PRINT     
         
-        ;interrupt to exit              
+        ;INTERRUPT TO EXIT              
         MOV AH,4CH
         INT 21H
 
     MAIN ENDP
     PRINT PROC          
         
-        ;initialize count
-        mov cx,0
-        mov dx,0
-        label1:
-            ; if ax is zero
-            cmp ax,0
-            je printorder     
+        ;INITIALIZE COUNT
+        MOV CX,0
+        MOV DX,0
+        LABEL1:
+            ; IF AX IS ZERO
+            CMP AX,0
+            JE PRINTORDER     
             
-            ;initialize bx to 10
-            mov bx,16  
+            ;INITIALIZE BX TO 10
+            MOV BX,16  
             
-            ; extract the last digit
-            div bx                 
+            ; EXTRACT THE LAST DIGIT
+            DIV BX                 
 
-            ; div == ax / bx 
-            ; ax /= bx
-            ; dx = ax % bx
+            ; DIV == AX / BX 
+            ; AX /= BX
+            ; DX = AX % BX
 
-            ;push it in the stack
-            push dx             
+            ;PUSH IT IN THE STACK
+            PUSH DX             
             
-            ;increment the count
-            inc cx             
+            ;INCREMENT THE COUNT
+            INC CX             
             
-            ;set dx to 0
-            xor dx,dx
-            ; dx는 자신과 같으니, xor dx, dx == always zero.
-            jmp label1
+            ;SET DX TO 0
+            XOR DX,DX
+            ; DX는 자신과 같으니, XOR DX, DX == ALWAYS ZERO.
+            JMP LABEL1
 
-        printorder:
-            ; cx == stack size
-            ;check if count
-            ;is greater than zero
-            cmp cx,0
-            je exit
-            pop dx
-            cmp dx, 10
-            jb print1
-            jmp printh
-        print1:
-            add dx,'0'
-            mov ah,02h
-            int 21h
-            dec cx
-            jmp printorder
-        printh:
-            add dx,'A'-10
-            mov ah,02h
-            int 21h
-            dec cx
-            jmp printorder
+        PRINTORDER:
+            ; CX == STACK SIZE
+            ;CHECK IF COUNT
+            ;IS GREATER THAN ZERO
+            CMP CX,0
+            JE EXIT
+            POP DX
+            CMP DX, 10
+            JB PRINT1
+            JMP PRINTH
+        PRINT1:
+            ADD DX,'0'
+            MOV AH,02H
+            INT 21H
+            DEC CX
+            JMP PRINTORDER
+        PRINTH:
+            ADD DX,'A'-10
+            MOV AH,02H
+            INT 21H
+            DEC CX
+            JMP PRINTORDER
 
-    exit:
-    ret
+    EXIT:
+    RET
     PRINT ENDP
     END MAIN

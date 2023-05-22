@@ -4,7 +4,7 @@
 .STACK 100H
 .DATA
 ; printable range [0 65535]
-d1 dw 0faa1h
+d1 dw 0FFFFh
 .CODE
 MAIN PROC FAR
     MOV AX,@DATA

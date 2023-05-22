@@ -4,20 +4,25 @@ INIT:
     MOV AX, CS
     MOV DS, AX
 
-    mov dx, 0
-    mov ax, var1
-    ; ax = 0007
-    mov bx, 2
-    div bx
-    ;mov dx, AX
 
-    add dx, '0'
+    xor ax, ax
+    xor dx, dx
+
+    mov al, var1
+    
+    mov bl, 2
+    div bl
+    
+
+    mov dl, al
+    
+    add dl, '0'
     mov ah, 2
     int 21h
 
     MOV AX, 4C00H
     INT 21H
 
-    VAR1 DW 7
+    VAR1 DB 7
 CODE ENDS
     END INIT

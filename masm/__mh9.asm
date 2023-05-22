@@ -3,6 +3,9 @@
 MAIN SEGMENT
     ASSUME CS:MAIN, DS:data
 PRINT_ANS:
+; 11H / 10(10) = 10 + 7
+; 17(10)
+; 8(H) == 8(10)  / 10 = 0 + 8
     MOV AX, sum
     MOV BL, 10
     DIV BL

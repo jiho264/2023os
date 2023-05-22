@@ -2,6 +2,8 @@
 CODE SEGMENT
     ASSUME CS:CODE, DS:DATA
 PRINT_ANS:
+    ; ans DW 17(10)
+    ;       11H
     CMP ANS, 10
     JB UNDER10
     UPPER10: ; IF ANS >= 10
