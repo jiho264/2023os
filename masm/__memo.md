@@ -1,5 +1,3 @@
-- HTTPS://GITHUB.COM/JIHO264/2023OS/BLOB/MAIN/MASM/__MEMO.MD
-
 # INPUT (SAVE INPUT TO AX)
 - ECHO INPUT
     MOV AH, 1
@@ -93,112 +91,33 @@
         VAR4 DB 'HELLO WORLD$'
     CODE ENDS
         END INIT
-# PRINT [0 99]
-    PRINT_ANS:
-        MOV AX, ANS
-        MOV BL, 10
-        DIV BL
-        MOV NUM10, AL
-        MOV NUM1, AH
-        MOV DX, OFFSET NUM10
 
-        CMP NUM10, 0
-        JNE EXIT
-
-        MOV DX, OFFSET NUM1
-        EXIT: ; CONVERT TO ASCII CODE
-            ADD NUM10, '0'
-            ADD NUM1, '0'
-            MOV AH, 9
-            INT 21H
-        RET
-
-    ANS DW ?
-    NUM10 DB ?
-    NUM1 DB ?
 # PRINT DECIMAL
     ; HTTPS://WWW.GEEKSFORGEEKS.ORG/8086-PROGRAM-TO-PRINT-A-16-BIT-DECIMAL-NUMBER/
-    ;8086 PROGRAM TO PRINT A 16 BIT DECIMAL NUMBER
-    .MODEL SMALL
-    .STACK 100H
-    .DATA
-    ; PRINTABLE RANGE [0 65535]
-    D1 DW 65535
-    .CODE
-    MAIN PROC FAR
-        MOV AX,@DATA
-        MOV DS,AX   
-        
-        ;LOAD THE VALUE STORED
-        ; IN VARIABLE D1
-        MOV AX,D1      
-        
-        ;PRINT THE VALUE
-        CALL PRINT     
-        
-        ;INTERRUPT TO EXIT              
-        MOV AH,4CH
-        INT 21H
-
-    MAIN ENDP
-    PRINT PROC          
-        
-        ;INITIALIZE COUNT
+    PRINT_ANS:
+    ; 미리 ax에 출력값 넣어놔야함
         MOV CX,0
         MOV DX,0
         LABEL1:
-            ; IF AX IS ZERO
             CMP AX,0
             JE PRINT1     
-            
-            ;INITIALIZE BX TO 10
             MOV BX,10       
-            
-            ; EXTRACT THE LAST DIGIT
-            DIV BX                 
-
-            ; DIV == AX / BX 
-            ; AX /= BX
-            ; DX = AX % BX
-
-            ;PUSH IT IN THE STACK
+            DIV BX               
             PUSH DX             
-            
-            ;INCREMENT THE COUNT
-            INC CX             
-            
-            ;SET DX TO 0
+            INC CX      
             XOR DX,DX
-            ; DX는 자신과 같으니, XOR DX, DX == ALWAYS ZERO.
             JMP LABEL1
         PRINT1:
-            ; CX == STACK SIZE
-
-            ;CHECK IF COUNT
-            ;IS GREATER THAN ZERO
             CMP CX,0
             JE EXIT
-            
-            ;POP THE TOP OF STACK
             POP DX
-            
-            ;ADD 48 SO THAT IT
-            ;REPRESENTS THE ASCII
-            ;VALUE OF DIGITS
             ADD DX,48
-            
-            ;INTERRUPT TO PRINT A
-            ;CHARACTER
             MOV AH,02H
             INT 21H
-            
-            ;DECREASE THE COUNT
             DEC CX
             JMP PRINT1
-    EXIT:
-    RET
-    PRINT ENDP
-    END MAIN
+        EXIT:
+            RET
 
 # PRINT HEXADECIMAL
     ; HTTPS://WWW.GEEKSFORGEEKS.ORG/8086-PROGRAM-TO-PRINT-A-16-BIT-DECIMAL-NUMBER/

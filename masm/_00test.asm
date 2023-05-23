@@ -3,26 +3,16 @@ CODE SEGMENT
 INIT:
     MOV AX, CS
     MOV DS, AX
-
-
-    xor ax, ax
-    xor dx, dx
-
-    mov al, var1
-    
-    mov bl, 2
-    div bl
-    
-
-    mov dl, al
-    
-    add dl, '0'
-    mov ah, 2
-    int 21h
+                ; OPRAND DW MD OP1 OP2
+    ;MOV AX, BX  ; 100010 11 11 000 011 = 8BC3
+    ;MOV CL, 9  ; 1011 0 001 1001 0000 == B109
+    ;MOV DX, 20 ; 1011 1010 14H == BA14
+    ;ADD AL, 11 ; 00000100 0B == 040B
+    ;INC A       ; *A== 000E 일때, 1111 1110 00 000 110 0E00
 
     MOV AX, 4C00H
     INT 21H
 
-    VAR1 DB 7
+    ;A DB ?
 CODE ENDS
     END INIT

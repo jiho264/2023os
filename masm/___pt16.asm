@@ -1,0 +1,43 @@
+CODE SEGMENT
+    ASSUME CS:CODE, DS:CODE
+    MOV AX, CS
+    MOV DS, AX
+
+    MOV AL, 3FH
+    CALL PUTAL
+    MOV AH, 4CH
+    INT 21H
+
+PUTAL:
+    MOV BL, 10H
+    MUL BL
+    MOV LEVEL2, AH
+
+    MOV AH, 0
+    DIV BL
+    MOV LEVEL1, AL
+
+    MOV DL, LEVEL2
+    CALL PUTHEX
+
+    MOV DL, LEVEL1
+    CALL PUTHEX
+
+    RET
+PUTHEX:
+    CMP DL, 0AH
+    JAE HEX
+    ADD DL, '0'
+    JMP PRINT
+HEX:
+    ADD DL, 'A'-0AH
+PRINT:
+    MOV AH, 2
+    INT 21H
+    RET
+
+LEVEL1 DB ?
+LEVEL2 DB ?
+
+CODE ENDS
+END

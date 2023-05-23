@@ -44,7 +44,7 @@ RT:
     ; IF INPUT IS LOWER
     CMP AX, 'a'
     JB SKIP
-    SUB AX, 20H
+        SUB AX, 20H
     SKIP:
         SUB AX, 'A'-1
 
